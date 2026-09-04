@@ -4,6 +4,7 @@ dist/
 **/obj/
 .vite/
 *.log
+pi-session-*.html
 *.tsbuildinfo
 vite.config.js
 vite.config.d.ts

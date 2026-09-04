@@ -18,6 +18,16 @@ npm test
 npm run build
 ```
 
+## GitHub Pages
+
+The production build uses the `/jumino-drafts/` project-site base path. The workflow in `.github/workflows/deploy-pages.yml` tests and deploys `dist/` whenever `main` is pushed.
+
+For the first deployment, open **Settings → Pages** in GitHub and set **Source** to **GitHub Actions**. The site will be available at:
+
+```text
+https://darthcircuit.github.io/jumino-drafts/
+```
+
 ## Safety model
 
 - Processing is browser-only; saves are not uploaded.

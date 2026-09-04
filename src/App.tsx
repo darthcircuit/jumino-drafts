@@ -15,6 +15,8 @@ const DEFAULT_LAYERS: LayerState = { building: true, object: true, tree: true, g
 const COLORS: Record<string, string> = {
   building: '#d98f45', object: '#7a8594', tree: '#26734d', grass: '#77a84b', crop: '#d3bd57', clump: '#795940', feature: '#8e6aa8',
 };
+const TEMPLATE_NAMES: Record<string, string> = { '0': 'standard', '1': 'riverland', '2': 'forest', '3': 'hilltop', '4': 'wilderness', '5': 'four-corners', '6': 'beach', MeadowlandsFarm: 'meadowlands' };
+const templateUrl = (layoutId: string) => `${import.meta.env.BASE_URL}templates/generated/${TEMPLATE_NAMES[layoutId]}-1.6.15.xml`;
 const SKILL_XP = [0, 100, 380, 770, 1300, 2150, 3300, 4800, 6900, 10000, 15000];
 const SKILLS = [['farming', 'Farming'], ['fishing', 'Fishing'], ['foraging', 'Foraging'], ['mining', 'Mining'], ['combat', 'Combat'], ['luck', 'Luck']] as const;
 const RESIDENTS = ['Abigail', 'Alex', 'Caroline', 'Clint', 'Demetrius', 'Dwarf', 'Elliott', 'Emily', 'Evelyn', 'George', 'Gus', 'Haley', 'Harvey', 'Jas', 'Jodi', 'Kent', 'Krobus', 'Leah', 'Leo', 'Lewis', 'Linus', 'Marnie', 'Maru', 'Pam', 'Penny', 'Pierre', 'Robin', 'Sam', 'Sandy', 'Sebastian', 'Shane', 'Vincent', 'Willy', 'Wizard'];
@@ -218,9 +220,8 @@ function App() {
 
   async function startNew(layoutId: string, startingCabins = 0) {
     setError(''); setNotice('');
-    const templateNames: Record<string, string> = { '0': 'standard', '1': 'riverland', '2': 'forest', '3': 'hilltop', '4': 'wilderness', '5': 'four-corners', '6': 'beach', MeadowlandsFarm: 'meadowlands' };
     try {
-      const response = await fetch(`/templates/generated/${templateNames[layoutId]}-1.6.15.xml`);
+      const response = await fetch(templateUrl(layoutId));
       if (!response.ok) throw new Error('Bundled starter template could not be loaded.');
       const starterDocument = parseSave(await response.text());
       loadDocument(starterDocument, true);
@@ -259,9 +260,8 @@ function App() {
 
   async function changeLayout(layoutId: string) {
     if (!settings || workspaceMode === 'edit' || layoutId === summary?.layoutId) return;
-    const templateNames: Record<string, string> = { '0': 'standard', '1': 'riverland', '2': 'forest', '3': 'hilltop', '4': 'wilderness', '5': 'four-corners', '6': 'beach', MeadowlandsFarm: 'meadowlands' };
     try {
-      const response = await fetch(`/templates/generated/${templateNames[layoutId]}-1.6.15.xml`);
+      const response = await fetch(templateUrl(layoutId));
       if (!response.ok) throw new Error('Game-generated layout template could not be loaded.');
       const nextDocument = parseSave(await response.text());
       loadDocument(nextDocument, true);
