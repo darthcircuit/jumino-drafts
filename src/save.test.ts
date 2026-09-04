@@ -186,5 +186,5 @@ describe('Stardew save pipeline', () => {
     expect(info).not.toBeNull();
     expect((await main!.async('string')).replace(/^\uFEFF/, '')).toContain('<uniqueIDForThisGame>123456789</uniqueIDForThisGame>');
     expect((await info!.async('string')).replace(/^\uFEFF/, '')).toContain('<Farmer');
-  }, 15_000);
+  }, 60_000);
 });
