@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <SdvSourceRoot Condition="'$(SdvSourceRoot)' == ''">../../../stardew-decomp-clean</SdvSourceRoot>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(SdvSourceRoot)/external/FNA/FNA.NetStandard.csproj" />
+    <ProjectReference Include="$(SdvSourceRoot)/external/xTile/xTile.csproj" />
+    <Reference Include="StardewValley.GameData" HintPath="$(SdvSourceRoot)/bin/BrowserWasm/Debug/net9.0/StardewValley.GameData.dll" />
+  </ItemGroup>
+</Project>
