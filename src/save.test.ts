@@ -5,7 +5,7 @@ import { applySettings, convertFarmLayout, exportSave, parseSave, readEntities, 
 import { SAFE_BUILDINGS, STARTING_CABIN } from './buildings';
 import { INTERIOR_BUILDINGS } from './buildingFixtures';
 
-const fixturePath = 'existing_saves/Refugio_394913360/Refugio_394913360';
+const fixturePath = 'public/templates/riverland-1.6.15.xml';
 
 async function fixture() {
   return parseSave(await readFile(fixturePath, 'utf8'));
@@ -44,7 +44,7 @@ describe('Stardew save pipeline', () => {
   });
 
   it('preserves imported inventory, exact XP, and multiplayer ownership when editing in place', async () => {
-    const source = parseSave(await readFile('existing_saves/Leek_404858620/Leek_404858620', 'utf8'));
+    const source = parseSave(await readFile('public/templates/generated/standard-1.6.15.xml', 'utf8'));
     const settings = summarize(source).settings;
     const sourcePlayer = source.getElementsByTagName('player')[0];
     const originalInventory = new XMLSerializer().serializeToString(sourcePlayer.getElementsByTagName('items')[0]);
@@ -68,7 +68,7 @@ describe('Stardew save pipeline', () => {
     const updated = summarize(output);
     expect(updated.settings).toMatchObject({ playerName: 'Fern', farmName: 'Moss', gender: 'Male', hair: 12, skin: 4, accessory: 2, petType: 'Dog', petBreed: 1, season: 'fall', day: 17, year: 3, money: 3210 });
     expect(readEntities(output).filter((entity) => ['Weeds', 'Stone', 'Twig', 'Artifact Spot', 'Seed Spot'].includes(entity.name))).toHaveLength(0);
-    expect(summarize(source).settings.playerName).toBe('Chani');
+    expect(summarize(source).settings.playerName).toBe(initial.settings.playerName);
   });
 
   it('moves and removes farm entities while keeping the source intact', async () => {
